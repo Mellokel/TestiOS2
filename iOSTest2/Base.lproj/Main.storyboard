@@ -22,63 +22,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="ugc-0q-E1j" kind="relationship" relationship="rootViewController" id="xA4-kE-zqG"/>
+                        <segue destination="4rz-e0-2WW" kind="relationship" relationship="rootViewController" id="rTP-ci-2ht"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IeS-x3-WmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-23" y="-262"/>
-        </scene>
-        <!--Список-->
-        <scene sceneID="2dW-Z0-E6z">
-            <objects>
-                <tableViewController id="ugc-0q-E1j" customClass="ListTableVC" customModule="iOSTest2" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="YY2-zU-GbC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="rdH-G7-W43">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rdH-G7-W43" id="bWT-eF-fXy">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="4it-fl-9Jh" kind="show" identifier="EditEmloyee" id="hlk-HC-yni"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="ugc-0q-E1j" id="0VZ-Qd-5dX"/>
-                            <outlet property="delegate" destination="ugc-0q-E1j" id="6V0-Ew-I31"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Список" id="7AW-Vo-L5D">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="gPv-9c-koj">
-                            <connections>
-                                <action selector="editButtonAction:" destination="ugc-0q-E1j" id="kjE-EA-Szd"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem title="+" id="65l-s3-8nK">
-                                <connections>
-                                    <segue destination="4it-fl-9Jh" kind="show" identifier="AddEmployee" id="rJc-pb-tOF"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Sort" id="xsV-4F-yqC">
-                                <connections>
-                                    <action selector="sortButtonAction:" destination="ugc-0q-E1j" id="t1W-Ml-Wie"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UjR-al-ZoQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="901.60000000000002" y="-264.01799100449779"/>
         </scene>
         <!--Edit ListVC-->
         <scene sceneID="bq0-33-8Ik">
@@ -179,7 +128,7 @@
                     </view>
                     <size key="freeformSize" width="375" height="782"/>
                     <connections>
-                        <outlet property="accourantTypePicker" destination="RpF-kF-DoF" id="Iud-e1-G9W"/>
+                        <outlet property="accountantTypePicker" destination="RpF-kF-DoF" id="Iud-e1-G9W"/>
                         <outlet property="fullName" destination="zpM-li-lMp" id="Zzd-zu-h50"/>
                         <outlet property="lunchOrBusinessTimePickerFrom" destination="Hyf-eF-PG4" id="VT6-Js-AuA"/>
                         <outlet property="lunchOrBusinessTimePickerTo" destination="fMN-KN-dfc" id="BzU-N1-ZjL"/>
@@ -190,7 +139,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OvD-06-qUi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1789.5999999999999" y="-264.46776611694156"/>
+            <point key="canvasLocation" x="1098" y="-263"/>
         </scene>
         <!--Gallery-->
         <scene sceneID="0Nw-x9-R3h">
@@ -206,7 +155,73 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crI-gw-oBc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-22" y="427"/>
+            <point key="canvasLocation" x="-24" y="513"/>
+        </scene>
+        <!--List-->
+        <scene sceneID="3AW-bi-Eka">
+            <objects>
+                <viewController id="4rz-e0-2WW" customClass="ListTableVC" customModule="iOSTest2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7qq-Yx-3zK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jne-xV-EJv">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="wRM-DN-icb">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wRM-DN-icb" id="ViL-Bh-WOh">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="4it-fl-9Jh" kind="show" identifier="EditEmloyee" id="kxM-28-V6i"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="4rz-e0-2WW" id="yhn-GM-mrJ"/>
+                                    <outlet property="delegate" destination="4rz-e0-2WW" id="GKi-N0-L7F"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jne-xV-EJv" firstAttribute="bottom" secondItem="0gm-pD-J1G" secondAttribute="bottom" id="SIw-P9-1jW"/>
+                            <constraint firstItem="Jne-xV-EJv" firstAttribute="trailing" secondItem="0gm-pD-J1G" secondAttribute="trailing" id="dea-iL-nSv"/>
+                            <constraint firstItem="Jne-xV-EJv" firstAttribute="top" secondItem="0gm-pD-J1G" secondAttribute="top" id="elP-5W-XCZ"/>
+                            <constraint firstItem="Jne-xV-EJv" firstAttribute="leading" secondItem="0gm-pD-J1G" secondAttribute="leading" id="rB7-tj-huk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0gm-pD-J1G"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="List" id="SIi-bF-pjw">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="PRz-9Y-Rwx">
+                            <connections>
+                                <action selector="editButtonAction:" destination="4rz-e0-2WW" id="U0I-ZV-Kgz"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="+" id="cxd-At-gNm">
+                                <connections>
+                                    <segue destination="4it-fl-9Jh" kind="show" id="1fp-L0-b96"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="j2y-2b-CIG">
+                                <connections>
+                                    <action selector="sortButtonAction:" destination="4rz-e0-2WW" id="xnf-Fg-q3b"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Jne-xV-EJv" id="ERw-TY-CQQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4cp-TG-c02" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="521" y="-263"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dKI-t1-CRk">
@@ -228,6 +243,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hlk-HC-yni"/>
+        <segue reference="kxM-28-V6i"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -8,7 +8,15 @@
 
 import UIKit
 
-class ListTableVC: UITableViewController {
+class ListTableVC: UIViewController {
+   
+    enum enumTypeEmployee: String {
+        case Accountant = "Accountant"
+        case Manager = "Manager"
+        case Worker = "Worker"
+       
+        
+    }
     
     private var groupedEmployees: [String:[Employee]] = [:] {
         didSet {
@@ -19,6 +27,10 @@ class ListTableVC: UITableViewController {
     private let listCoreData = ListCoreData()
     private let cellIdentifire = "cell"
     private let cellSegueIdentifire = "EditEmloyee"
+    
+    private let timeManager = ListTimeManager()
+    
+    @IBOutlet weak var tableView: UITableView!
     
     @IBAction func editButtonAction(_ sender: UIBarButtonItem) {
         tableView.isEditing = !tableView.isEditing
@@ -37,7 +49,31 @@ class ListTableVC: UITableViewController {
         tableView.reloadData()
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    
+   
+    
+    // переход
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == cellSegueIdentifire, let destination = segue.destination as? EditListVC {
+            guard let indexPath = tableView.indexPathForSelectedRow else { return }
+            guard let sectiion = groupedEmployees[employeeTypes[indexPath.section]] else { return }
+            destination.employee = sectiion[indexPath.row]
+        }
+    }
+    
+}
+
+extension ListTableVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (groupedEmployees[employeeTypes[section]]?.count)!
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return groupedEmployees.count
+    }
+   
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifire)
         cell?.textLabel?.numberOfLines = 0
         if let section = groupedEmployees[employeeTypes[indexPath.section]] { // вынести?
@@ -47,25 +83,28 @@ class ListTableVC: UITableViewController {
             Salary - \(String(employee.salary))\n
             """
             switch employee.type! {
-            case "Accourant":
-                let info = employee.info as! Accourant
+            case enumTypeEmployee.Accountant.rawValue:
+                let info = employee.info as! Accountant
                 cell?.textLabel?.text = stringValue + """
                 Work Place - \(String(describing: info.workPlace))
-                Lunch Time - \(String(describing: info.lunchTime!))
+                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
+                                                    timeIntervalTo: info.lunchTimeTo))
                 Type - \(String(describing: info.type!))
                 """
                 break
-            case "Worker":
+            case enumTypeEmployee.Worker.rawValue:
                 let info = employee.info as! Worker
                 cell?.textLabel?.text = stringValue + """
                 Work Place- \(String(describing: info.workPlace))
-                Lunch Time - \(String(describing: info.lunchTime!))
+                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
+                                                    timeIntervalTo: info.lunchTimeTo))
                 """
                 break
-            case "Manager":
+            case enumTypeEmployee.Manager.rawValue:
                 let info = employee.info as! Manager
                 cell?.textLabel?.text = stringValue + """
-                Lunch Time - \(String(describing: info.businessTime!))
+                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.businessTimeFrom,
+                                                    timeIntervalTo: info.businessTimeTo))
                 """
                 break
             default:
@@ -76,17 +115,38 @@ class ListTableVC: UITableViewController {
         return cell!
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (groupedEmployees[employeeTypes[section]]?.count)!
+    //MARK: - Edit in table(move, delete)
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return groupedEmployees.count
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if sourceIndexPath.section != destinationIndexPath.section { // перенос только в пределах секции
+            tableView.reloadData()
+            return
+        }
+        guard let section = groupedEmployees[employeeTypes[sourceIndexPath.section]] else { return }
+        let destinationOrder = Int32(section[destinationIndexPath.row].order)
+        listCoreData.replace(employee: section[sourceIndexPath.row], toOrder: destinationOrder)
+        groupedEmployees = listCoreData.getGroupedEmployes()
+        tableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let sectiion = groupedEmployees[employeeTypes[indexPath.section]] else { return }
+            listCoreData.deleteEmployee(employee: sectiion[indexPath.row])
+            groupedEmployees = listCoreData.getGroupedEmployes()
+            tableView.reloadData()
+        }
+    }
+}
+
+extension ListTableVC : UITableViewDelegate{
     //MARK: section header
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
-        //view.backgroundColor = .black
+        
         let image = UIImageView(frame: CGRect(x: 5, y: 5, width: 40, height: 40))
         image.backgroundColor = .white
         view.addSubview(image)
@@ -98,39 +158,10 @@ class ListTableVC: UITableViewController {
         return view
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-    //MARK: - Edit in table(move, delete)
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-   
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let section = groupedEmployees[employeeTypes[sourceIndexPath.section]] else { return }
-        let destinationOrder = Int32(section[destinationIndexPath.row].order)
-        listCoreData.replace(employee: section[sourceIndexPath.row], toOrder: destinationOrder)
-        groupedEmployees = listCoreData.getGroupedEmployes()
-        tableView.reloadData()
-    }
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            guard let sectiion = groupedEmployees[employeeTypes[indexPath.section]] else { return }
-            listCoreData.deleteEmployee(employee: sectiion[indexPath.row])
-            groupedEmployees = listCoreData.getGroupedEmployes()
-            tableView.reloadData()
-        }
-    }
     
-    // переход
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == cellSegueIdentifire, let destination = segue.destination as? EditListVC {
-            guard let indexPath = tableView.indexPathForSelectedRow else { return }
-            guard let sectiion = groupedEmployees[employeeTypes[indexPath.section]] else { return }
-            destination.employee = sectiion[indexPath.row]
-        }
-    }
 }
 
-// запретить перенос в другую секции вручную 
+

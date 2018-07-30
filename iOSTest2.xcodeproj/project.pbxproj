@@ -9,20 +9,31 @@
 /* Begin PBXBuildFile section */
 		842968EB2105925B00959A25 /* EditList+PickerViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842968EA2105925B00959A25 /* EditList+PickerViewExtension.swift */; };
 		843893162104CAA600662DEC /* ListTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843893152104CAA600662DEC /* ListTableVC.swift */; };
-		8438931A2104D7C200662DEC /* ListCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843893192104D7C200662DEC /* ListCoreData.swift */; };
+		8438931A2104D7C200662DEC /* ListCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843893192104D7C200662DEC /* ListCoreDataManager.swift */; };
 		8438931D2104E4BB00662DEC /* EditListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8438931C2104E4BB00662DEC /* EditListVC.swift */; };
+		845BF22B210C316800BDCB36 /* MainCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BF22A210C316800BDCB36 /* MainCoreData.swift */; };
+		845BF22E210C746500BDCB36 /* EmployeeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BF22D210C746500BDCB36 /* EmployeeInfo.swift */; };
+		845BF230210C748B00BDCB36 /* AccountantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BF22F210C748B00BDCB36 /* AccountantInfo.swift */; };
+		845BF232210C749A00BDCB36 /* WorkerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BF231210C749A00BDCB36 /* WorkerInfo.swift */; };
+		845BF234210C750B00BDCB36 /* ManagerInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845BF233210C750B00BDCB36 /* ManagerInfo.swift */; };
 		8470C600210434F500C8A532 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8470C5FF210434F500C8A532 /* AppDelegate.swift */; };
 		8470C605210434F500C8A532 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8470C603210434F500C8A532 /* Main.storyboard */; };
 		8470C608210434F500C8A532 /* iOSTest2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8470C606210434F500C8A532 /* iOSTest2.xcdatamodeld */; };
 		8470C60A210434F500C8A532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8470C609210434F500C8A532 /* Assets.xcassets */; };
 		8470C60D210434F500C8A532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8470C60B210434F500C8A532 /* LaunchScreen.storyboard */; };
+		847D3A74210F22FF00205B13 /* ListTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D3A73210F22FF00205B13 /* ListTimeManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		842968EA2105925B00959A25 /* EditList+PickerViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditList+PickerViewExtension.swift"; sourceTree = "<group>"; };
 		843893152104CAA600662DEC /* ListTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableVC.swift; sourceTree = "<group>"; };
-		843893192104D7C200662DEC /* ListCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoreData.swift; sourceTree = "<group>"; };
+		843893192104D7C200662DEC /* ListCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCoreDataManager.swift; sourceTree = "<group>"; };
 		8438931C2104E4BB00662DEC /* EditListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditListVC.swift; sourceTree = "<group>"; };
+		845BF22A210C316800BDCB36 /* MainCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoreData.swift; sourceTree = "<group>"; };
+		845BF22D210C746500BDCB36 /* EmployeeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeInfo.swift; sourceTree = "<group>"; };
+		845BF22F210C748B00BDCB36 /* AccountantInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountantInfo.swift; sourceTree = "<group>"; };
+		845BF231210C749A00BDCB36 /* WorkerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkerInfo.swift; sourceTree = "<group>"; };
+		845BF233210C750B00BDCB36 /* ManagerInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerInfo.swift; sourceTree = "<group>"; };
 		8470C5FC210434F500C8A532 /* iOSTest2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSTest2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8470C5FF210434F500C8A532 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8470C604210434F500C8A532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,6 +41,7 @@
 		8470C609210434F500C8A532 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8470C60C210434F500C8A532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8470C60E210434F500C8A532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		847D3A73210F22FF00205B13 /* ListTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTimeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +58,10 @@
 		843893142104CA8700662DEC /* ListVC */ = {
 			isa = PBXGroup;
 			children = (
+				845BF22C210C744000BDCB36 /* Model */,
 				843893152104CAA600662DEC /* ListTableVC.swift */,
-				843893192104D7C200662DEC /* ListCoreData.swift */,
+				847D3A73210F22FF00205B13 /* ListTimeManager.swift */,
+				843893192104D7C200662DEC /* ListCoreDataManager.swift */,
 				8438931B2104E4A200662DEC /* EditListVC */,
 			);
 			path = ListVC;
@@ -60,6 +74,17 @@
 				842968EA2105925B00959A25 /* EditList+PickerViewExtension.swift */,
 			);
 			path = EditListVC;
+			sourceTree = "<group>";
+		};
+		845BF22C210C744000BDCB36 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				845BF22D210C746500BDCB36 /* EmployeeInfo.swift */,
+				845BF22F210C748B00BDCB36 /* AccountantInfo.swift */,
+				845BF231210C749A00BDCB36 /* WorkerInfo.swift */,
+				845BF233210C750B00BDCB36 /* ManagerInfo.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8470C5F3210434F500C8A532 = {
@@ -83,6 +108,7 @@
 			children = (
 				843893142104CA8700662DEC /* ListVC */,
 				8470C5FF210434F500C8A532 /* AppDelegate.swift */,
+				845BF22A210C316800BDCB36 /* MainCoreData.swift */,
 				8470C603210434F500C8A532 /* Main.storyboard */,
 				8470C609210434F500C8A532 /* Assets.xcassets */,
 				8470C60B210434F500C8A532 /* LaunchScreen.storyboard */,
@@ -165,11 +191,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				842968EB2105925B00959A25 /* EditList+PickerViewExtension.swift in Sources */,
+				845BF22E210C746500BDCB36 /* EmployeeInfo.swift in Sources */,
+				847D3A74210F22FF00205B13 /* ListTimeManager.swift in Sources */,
+				845BF22B210C316800BDCB36 /* MainCoreData.swift in Sources */,
 				8470C608210434F500C8A532 /* iOSTest2.xcdatamodeld in Sources */,
 				843893162104CAA600662DEC /* ListTableVC.swift in Sources */,
-				8438931A2104D7C200662DEC /* ListCoreData.swift in Sources */,
+				8438931A2104D7C200662DEC /* ListCoreDataManager.swift in Sources */,
+				845BF230210C748B00BDCB36 /* AccountantInfo.swift in Sources */,
 				8438931D2104E4BB00662DEC /* EditListVC.swift in Sources */,
+				845BF234210C750B00BDCB36 /* ManagerInfo.swift in Sources */,
 				8470C600210434F500C8A532 /* AppDelegate.swift in Sources */,
+				845BF232210C749A00BDCB36 /* WorkerInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

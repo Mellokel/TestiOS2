@@ -10,7 +10,7 @@ extension EditListVC: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == typePicker {
             return pickerValues.count
         } else {
-            return accourantValues.count
+            return accountantValues.count
         }
     }
     
@@ -18,21 +18,21 @@ extension EditListVC: UIPickerViewDelegate, UIPickerViewDataSource {
         if pickerView == typePicker {
             return pickerValues[row]
         } else {
-            return accourantValues[row]
+            return accountantValues[row]
         }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerValues[typePicker.selectedRow(inComponent: 0)] {
-        case "Accourant":
-            accourantTypePicker.isHidden = false
+        case "Accountant":
+            accountantTypePicker.isHidden = false
             workPlace.isEnabled = true
             break
         case "Manager":
-            accourantTypePicker.isHidden = true
+            accountantTypePicker.isHidden = true
             workPlace.isEnabled = false
             break
         case "Worker":
-            accourantTypePicker.isHidden = true
+            accountantTypePicker.isHidden = true
             workPlace.isEnabled = true
             break
         default:

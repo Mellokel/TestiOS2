@@ -2,14 +2,17 @@ import UIKit
 
 class EditListVC: UIViewController {
     
-    let pickerValues = ["Accourant","Manager","Worker"]
-    let accourantValues = ["Payroll","Material Accounting"]
+    var pickerValues = ["Accountant","Manager","Worker"]
+    
+    let accountantValues = ["Payroll","Material Accounting"]
     private let coreData = ListCoreData()
     
     var employee: Employee?
     
+    var keyboardDismissTapGesture: UIGestureRecognizer?
+    
     @IBOutlet weak var typePicker: UIPickerView!
-    @IBOutlet weak var accourantTypePicker: UIPickerView!
+    @IBOutlet weak var accountantTypePicker: UIPickerView!
     @IBOutlet weak var fullName: UITextField!
     @IBOutlet weak var salary: UITextField!
     @IBOutlet weak var workPlace: UITextField!
@@ -20,6 +23,7 @@ class EditListVC: UIViewController {
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         setValues()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveButtonAction))
     }
@@ -31,25 +35,30 @@ class EditListVC: UIViewController {
         }
         
         guard let salary = Double(salary.text!) else { return }
-        let timeFrom = getHourFromDatePicker(datePicker: lunchOrBusinessTimePickerFrom)
-        let timeTo = getHourFromDatePicker(datePicker: lunchOrBusinessTimePickerTo)
+        guard let fullName = fullName.text else { return }
+        let timeFrom = lunchOrBusinessTimePickerFrom.date.timeIntervalSince1970
+        let timeTo = lunchOrBusinessTimePickerTo.date.timeIntervalSince1970
         
-        switch pickerValues[typePicker.selectedRow(inComponent: 0)] {
-        case "Accourant":
-            guard let place = Double(workPlace.text!) else { return }
-            coreData.addAccourant(fullName: fullName.text!, salary: salary, luchTimeFrom: timeFrom, luchTimeTo: timeTo, workPlace: place, type: accourantValues[typePicker.selectedRow(inComponent: 0)])
+        let employeeInfo = EmployeeInfo(fullName: fullName, salary: salary)
+        
+        switch typePicker.selectedRow(inComponent: 0) {
+        case 0://"Accountant":
+            guard let place = Int32(workPlace.text!) else { return }
+            let info = AccountantInfo(type: accountantValues[typePicker.selectedRow(inComponent: 0)], workPlace: place, luchTimeFrom: timeFrom, luchTimeTo: timeTo)
+            coreData.addAccountant(employeeInfo: employeeInfo, accountantInfo: info)
             break
-        case "Manager":
-            coreData.addManager(fullName: fullName.text!, salary: salary, BusinessTimeFrom: timeFrom, BusinessTimeTo: timeTo)
+        case 1: //"Manager":
+            let info = ManagerInfo(businessTimeFrom: timeFrom, businessTimeTo: timeTo)
+            coreData.addManager(employeeInfo: employeeInfo, accountantInfo: info)
             break
-        case "Worker":
-            guard let place = Double(workPlace.text!) else { return }
-            coreData.addWorker(fullName: fullName.text!, salary: salary, luchTimeFrom: timeFrom, luchTimeTo: timeTo, workPlace: place)
+        case 2: //"Worker":
+            guard let place = Int32(workPlace.text!) else { return }
+            let info = WorkerInfo(workPlace: place, luchTimeFrom: timeFrom, luchTimeTo: timeTo)
+            coreData.addWorker(employeeInfo: employeeInfo, accountantInfo: info)
             break
         default:
             break
         }
-        
         // уведомление о сохранении/ошибке
     }
     
@@ -62,51 +71,64 @@ class EditListVC: UIViewController {
         salary.text = String(describing: unwwappedEmployee.salary)
         
         switch type {
-        case "Accourant":
-            let info = unwwappedEmployee.info as! Accourant
+        case pickerValues[0]://"Accountant":
+            let info = unwwappedEmployee.info as! Accountant
             workPlace.text = String(info.workPlace)
-            setTime(fromString: info.lunchTime!)
-            if let typeAccourant = info.type {
-                typePicker.selectRow(accourantValues.index(of: typeAccourant)!, inComponent: 0, animated: true)
+           
+            lunchOrBusinessTimePickerFrom.date = Date(timeIntervalSince1970: info.lunchTimeFrom)
+            lunchOrBusinessTimePickerTo.date = Date(timeIntervalSince1970: info.lunchTimeTo)
+            if let typeAccountant = info.type {
+                typePicker.selectRow(accountantValues.index(of: typeAccountant)!, inComponent: 0, animated: true)
             }
             break
-        case "Manager":
+        case pickerValues[1]://"Manager":
             let info = unwwappedEmployee.info as! Manager
-            setTime(fromString: info.businessTime!)
+            
+            lunchOrBusinessTimePickerFrom.date = Date(timeIntervalSince1970: info.businessTimeFrom)
+            lunchOrBusinessTimePickerTo.date = Date(timeIntervalSince1970: info.businessTimeTo)
             break
-        case "Worker":
+        case pickerValues[2]://"Worker":
             let info = unwwappedEmployee.info as! Worker
             workPlace.text = String(info.workPlace)
-            setTime(fromString: info.lunchTime!)
+            
+            lunchOrBusinessTimePickerFrom.date = Date(timeIntervalSince1970: info.lunchTimeFrom)
+            lunchOrBusinessTimePickerTo.date = Date(timeIntervalSince1970: info.lunchTimeTo)
             break
         default:
             break
         }
     }
     
-    // вынести все в другой класс?
-    func setTime(fromString str: String) {
-        let splitTime = str.split(separator: " ")
-        let splitHM = splitTime[1].split(separator: ":")
-        if let h = Int(splitHM[0]), let m = Int(splitHM[1]) {
-            setHourToDatePicker(datePicker: lunchOrBusinessTimePickerFrom, hours: h, minutes: m)
-            setHourToDatePicker(datePicker: lunchOrBusinessTimePickerTo, hours: h, minutes: m)
+    
+    
+    // обработка клавиатуры
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+    }
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+        if keyboardDismissTapGesture == nil {
+            keyboardDismissTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            keyboardDismissTapGesture?.cancelsTouchesInView = false
+            view.addGestureRecognizer(keyboardDismissTapGesture!)
+            typePicker.addGestureRecognizer(keyboardDismissTapGesture!)
+        }
+    }
+ 
+    @objc func dismissKeyboard(sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillHide(sender: NSNotification) {
+        if keyboardDismissTapGesture != nil {
+            view.removeGestureRecognizer(keyboardDismissTapGesture!)
+            typePicker.removeGestureRecognizer(keyboardDismissTapGesture!)
+            keyboardDismissTapGesture = nil
         }
     }
     
-    func getHourFromDatePicker(datePicker:UIDatePicker) -> String
-    {
-        let componentHour = NSCalendar.current.component(.hour, from:  datePicker.date)
-        let componentMinute = NSCalendar.current.component(.minute, from:  datePicker.date)
-        return "\(componentHour):\(componentMinute)"
-    }
-    func setHourToDatePicker(datePicker:UIDatePicker, hours: Int, minutes: Int)
-    {
-        let date = NSCalendar.current.date(from: DateComponents(hour: 5, minute: 5))
-        datePicker.setDate(date!, animated: true)
-    }
 }
-
-// убрать клаву
-// изменить/доделать время
-
