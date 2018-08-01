@@ -10,13 +10,7 @@ import UIKit
 
 class ListTableVC: UIViewController {
    
-    enum enumTypeEmployee: String {
-        case Accountant = "Accountant"
-        case Manager = "Manager"
-        case Worker = "Worker"
-       
-        
-    }
+    let typeEmployeeManager = TypeEmployeeManager()
     
     private var groupedEmployees: [String:[Employee]] = [:] {
         didSet {
@@ -82,33 +76,33 @@ extension ListTableVC: UITableViewDataSource {
             Full Name - \(String(describing: employee.fullName!))\n
             Salary - \(String(employee.salary))\n
             """
-            switch employee.type! {
-            case enumTypeEmployee.Accountant.rawValue:
-                let info = employee.info as! Accountant
-                cell?.textLabel?.text = stringValue + """
-                Work Place - \(String(describing: info.workPlace))
-                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
-                                                    timeIntervalTo: info.lunchTimeTo))
-                Type - \(String(describing: info.type!))
-                """
-                break
-            case enumTypeEmployee.Worker.rawValue:
-                let info = employee.info as! Worker
-                cell?.textLabel?.text = stringValue + """
-                Work Place- \(String(describing: info.workPlace))
-                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
-                                                    timeIntervalTo: info.lunchTimeTo))
-                """
-                break
-            case enumTypeEmployee.Manager.rawValue:
-                let info = employee.info as! Manager
-                cell?.textLabel?.text = stringValue + """
-                Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.businessTimeFrom,
-                                                    timeIntervalTo: info.businessTimeTo))
-                """
-                break
-            default:
-                break
+            if let type = typeEmployeeManager.getTypeFor(rawValue: employee.type!) {
+                switch type {
+                case .Accountant:
+                    let info = employee.info as! Accountant
+                    cell?.textLabel?.text = stringValue + """
+                    Work Place - \(String(describing: info.workPlace))
+                    Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
+                                                        timeIntervalTo: info.lunchTimeTo))
+                    Type - \(String(describing: info.type!))
+                    """
+                    break
+                case .Worker:
+                    let info = employee.info as! Worker
+                    cell?.textLabel?.text = stringValue + """
+                    Work Place- \(String(describing: info.workPlace))
+                    Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.lunchTimeFrom,
+                                                        timeIntervalTo: info.lunchTimeTo))
+                    """
+                    break
+                case .Manager:
+                    let info = employee.info as! Manager
+                    cell?.textLabel?.text = stringValue + """
+                    Lunch Time - \(timeManager.getTime(timeIntervalFrom: info.businessTimeFrom,
+                                                        timeIntervalTo: info.businessTimeTo))
+                    """
+                    break
+                }
             }
         }
         

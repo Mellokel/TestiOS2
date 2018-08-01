@@ -2,7 +2,9 @@ import UIKit
 
 class EditListVC: UIViewController {
     
-    var pickerValues = ["Accountant","Manager","Worker"]
+    let typeEmployeeManager = TypeEmployeeManager()
+    
+    var pickerValues:[TypeEmployeeManager.TypeEmployee] = []
     
     let accountantValues = ["Payroll","Material Accounting"]
     private let coreData = ListCoreData()
@@ -24,6 +26,7 @@ class EditListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickerValues = typeEmployeeManager.getTypesAsArray()
         setValues()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveButtonAction))
     }
@@ -41,22 +44,21 @@ class EditListVC: UIViewController {
         
         let employeeInfo = EmployeeInfo(fullName: fullName, salary: salary)
         
-        switch typePicker.selectedRow(inComponent: 0) {
-        case 0://"Accountant":
+        let type = pickerValues[typePicker.selectedRow(inComponent: 0)]
+        switch type {
+        case .Accountant:
             guard let place = Int32(workPlace.text!) else { return }
             let info = AccountantInfo(type: accountantValues[typePicker.selectedRow(inComponent: 0)], workPlace: place, luchTimeFrom: timeFrom, luchTimeTo: timeTo)
             coreData.addAccountant(employeeInfo: employeeInfo, accountantInfo: info)
             break
-        case 1: //"Manager":
+        case .Manager:
             let info = ManagerInfo(businessTimeFrom: timeFrom, businessTimeTo: timeTo)
             coreData.addManager(employeeInfo: employeeInfo, accountantInfo: info)
             break
-        case 2: //"Worker":
+        case .Worker:
             guard let place = Int32(workPlace.text!) else { return }
             let info = WorkerInfo(workPlace: place, luchTimeFrom: timeFrom, luchTimeTo: timeTo)
             coreData.addWorker(employeeInfo: employeeInfo, accountantInfo: info)
-            break
-        default:
             break
         }
         // уведомление о сохранении/ошибке
@@ -64,14 +66,17 @@ class EditListVC: UIViewController {
     
     func setValues() {
         guard let unwwappedEmployee = employee else { return }
-        guard let type = unwwappedEmployee.type else { return }
+        guard let typeStr = unwwappedEmployee.type,
+            let type = typeEmployeeManager.getTypeFor(rawValue: typeStr),
+            let index = pickerValues.index(of: type) else { return }
         
-        typePicker.selectRow(pickerValues.index(of: type)!, inComponent: 0, animated: true)
+        
+        typePicker.selectRow(index, inComponent: 0, animated: true)
         fullName.text = unwwappedEmployee.fullName!
         salary.text = String(describing: unwwappedEmployee.salary)
         
         switch type {
-        case pickerValues[0]://"Accountant":
+        case .Accountant:
             let info = unwwappedEmployee.info as! Accountant
             workPlace.text = String(info.workPlace)
            
@@ -81,25 +86,21 @@ class EditListVC: UIViewController {
                 typePicker.selectRow(accountantValues.index(of: typeAccountant)!, inComponent: 0, animated: true)
             }
             break
-        case pickerValues[1]://"Manager":
+        case .Manager:
             let info = unwwappedEmployee.info as! Manager
             
             lunchOrBusinessTimePickerFrom.date = Date(timeIntervalSince1970: info.businessTimeFrom)
             lunchOrBusinessTimePickerTo.date = Date(timeIntervalSince1970: info.businessTimeTo)
             break
-        case pickerValues[2]://"Worker":
+        case .Worker:
             let info = unwwappedEmployee.info as! Worker
             workPlace.text = String(info.workPlace)
             
             lunchOrBusinessTimePickerFrom.date = Date(timeIntervalSince1970: info.lunchTimeFrom)
             lunchOrBusinessTimePickerTo.date = Date(timeIntervalSince1970: info.lunchTimeTo)
             break
-        default:
-            break
         }
     }
-    
-    
     
     // обработка клавиатуры
     override func viewDidAppear(_ animated: Bool) {

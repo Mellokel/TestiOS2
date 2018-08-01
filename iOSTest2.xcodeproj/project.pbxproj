@@ -22,6 +22,7 @@
 		8470C60A210434F500C8A532 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8470C609210434F500C8A532 /* Assets.xcassets */; };
 		8470C60D210434F500C8A532 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8470C60B210434F500C8A532 /* LaunchScreen.storyboard */; };
 		847D3A74210F22FF00205B13 /* ListTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D3A73210F22FF00205B13 /* ListTimeManager.swift */; };
+		847D3A76210F540600205B13 /* TypeEmployee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D3A75210F540600205B13 /* TypeEmployee.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		8470C60C210434F500C8A532 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8470C60E210434F500C8A532 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		847D3A73210F22FF00205B13 /* ListTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTimeManager.swift; sourceTree = "<group>"; };
+		847D3A75210F540600205B13 /* TypeEmployee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeEmployee.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				845BF22F210C748B00BDCB36 /* AccountantInfo.swift */,
 				845BF231210C749A00BDCB36 /* WorkerInfo.swift */,
 				845BF233210C750B00BDCB36 /* ManagerInfo.swift */,
+				847D3A75210F540600205B13 /* TypeEmployee.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847D3A76210F540600205B13 /* TypeEmployee.swift in Sources */,
 				842968EB2105925B00959A25 /* EditList+PickerViewExtension.swift in Sources */,
 				845BF22E210C746500BDCB36 /* EmployeeInfo.swift in Sources */,
 				847D3A74210F22FF00205B13 /* ListTimeManager.swift in Sources */,

@@ -16,26 +16,25 @@ extension EditListVC: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView == typePicker {
-            return pickerValues[row]
+            return pickerValues[row].rawValue
         } else {
             return accountantValues[row]
         }
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        switch pickerValues[typePicker.selectedRow(inComponent: 0)] {
-        case "Accountant":
+        let type = pickerValues[typePicker.selectedRow(inComponent: 0)]
+        switch type {
+        case .Accountant:
             accountantTypePicker.isHidden = false
             workPlace.isEnabled = true
             break
-        case "Manager":
+        case .Manager:
             accountantTypePicker.isHidden = true
             workPlace.isEnabled = false
             break
-        case "Worker":
+        case .Worker:
             accountantTypePicker.isHidden = true
             workPlace.isEnabled = true
-            break
-        default:
             break
         }
     }
